@@ -1,19 +1,20 @@
 package com.uairango.reactnativegeocoder
 
-import android.location.Address;
-import android.location.Geocoder;
-
+import android.location.Address
+import android.location.Geocoder
+import android.os.Build
+import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
-import com.facebook.react.bridge.Promise
-import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.WritableArray;
-import com.facebook.react.bridge.WritableNativeArray;
-import com.facebook.react.bridge.WritableNativeMap;
+import com.facebook.react.bridge.ReadableMap
+import com.facebook.react.bridge.WritableArray
+import com.facebook.react.bridge.WritableNativeArray
+import com.facebook.react.bridge.WritableNativeMap
 import java.util.Locale
 
-class GeocoderModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
+class GeocoderModule(reactContext: ReactApplicationContext) :
+    ReactContextBaseJavaModule(reactContext) {
 
   private var locale: Locale = Locale.getDefault()
   private var geocoder: Geocoder = Geocoder(getReactApplicationContext(), locale)
@@ -24,9 +25,10 @@ class GeocoderModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
 
   @ReactMethod
   fun geocodeAddressAndroid(addressName: String, config: ReadableMap, promise: Promise) {
-    val bounds: ReadableMap? = if (config.hasKey("bounds")) {
-      config.getMap("bounds")
-    } else null
+    val bounds: ReadableMap? =
+        if (config.hasKey("bounds")) {
+          config.getMap("bounds")
+        } else null
 
     val sw: ReadableMap? = bounds?.getMap("sw")
     val ne: ReadableMap? = bounds?.getMap("ne")
@@ -43,16 +45,34 @@ class GeocoderModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
     var maxResults = if (config.hasKey("maxResults")) config.getInt("maxResults") else -1
     if (maxResults <= 0) maxResults = 5
     try {
-      val addresses: MutableList<Address>
-      if (swLat != null && swLng != null && neLat != null && neLng != null) {
-        addresses = geocoder.getFromLocationName(addressName, maxResults, swLat, swLng, neLat, neLng)
+      if (Build.VERSION.SDK_INT >= 33) {
+        val geocodeListener = object : Geocoder.GeocodeListener {
+          override fun onGeocode(addresses: MutableList<Address>) {
+            if (addresses != null && addresses.size > 0) {
+              promise.resolve(transform(addresses))
+            } else {
+              promise.reject("EMPTY_RESULT", "Geocoder returned an empty list.")
+            }
+          }
+
+          override fun onError(errorMessage: String?) {
+            promise.reject("ERROR_RESULT", errorMessage)
+          }
+        }
+        geocoder.getFromLocationName(addressName, maxResults, geocodeListener)
       } else {
-        addresses = geocoder.getFromLocationName(addressName, maxResults)
-      }
-      if (addresses != null && addresses.size > 0) {
-        promise.resolve(transform(addresses))
-      } else {
-        promise.reject("EMPTY_RESULT", "Geocoder returned an empty list.")
+        val addresses: MutableList<Address>
+        if (swLat != null && swLng != null && neLat != null && neLng != null) {
+          addresses =
+              geocoder.getFromLocationName(addressName, maxResults, swLat, swLng, neLat, neLng)!!.toMutableList()
+        } else {
+          addresses = geocoder.getFromLocationName(addressName, maxResults)!!.toMutableList()
+        }
+        if (addresses != null && addresses.size > 0) {
+          promise.resolve(transform(addresses))
+        } else {
+          promise.reject("EMPTY_RESULT", "Geocoder returned an empty list.")
+        }
       }
     } catch (e: Exception) {
       promise.reject("NATIVE_ERROR", e)
@@ -67,9 +87,10 @@ class GeocoderModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
       geocoder = Geocoder(getReactApplicationContext(), locale)
     }
     var maxResults = if (config.hasKey("maxResults")) config.getInt("maxResults") else -1
-    if (maxResults <= 0) maxResults = 5;
+    if (maxResults <= 0) maxResults = 5
     try {
-      val addresses = geocoder.getFromLocation(position.getDouble("lat"), position.getDouble("lng"), maxResults)
+      val addresses =
+          geocoder.getFromLocation(position.getDouble("lat"), position.getDouble("lng"), maxResults)
       if (addresses != null && addresses.size > 0) {
         promise.resolve(transform(addresses))
       } else {
@@ -89,9 +110,11 @@ class GeocoderModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
       position.putDouble("lng", address.getLongitude())
       result.putMap("position", position)
       val feature_name = address.getFeatureName()
-      if ((feature_name != null && feature_name != address.getSubThoroughfare() &&
-          feature_name != address.getThoroughfare() &&
-          feature_name != address.getLocality())) {
+      if ((feature_name != null &&
+              feature_name != address.getSubThoroughfare() &&
+              feature_name != address.getThoroughfare() &&
+              feature_name != address.getLocality())
+      ) {
         result.putString("feature", feature_name)
       } else {
         result.putString("feature", null)
