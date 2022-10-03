@@ -2,10 +2,10 @@
 
 Multi-platform Geocoding library for React Native apps.
 
-[![CircleCI](https://circleci.com/gh/timwangdev/react-native-geocoder-reborn/tree/master.svg?style=shield)](https://circleci.com/gh/timwangdev/react-native-geocoder-reborn/tree/master)
-[![npm](https://img.shields.io/npm/v/@timwangdev/react-native-geocoder.svg)](https://www.npmjs.com/package/@timwangdev/react-native-geocoder)
+[![CircleCI](https://circleci.com/gh/uairango/react-native-geocoder-reborn/tree/master.svg?style=shield)](https://circleci.com/gh/uairango/react-native-geocoder-reborn/tree/master)
+[![npm](https://img.shields.io/npm/v/@uairango/react-native-geocoder.svg)](https://www.npmjs.com/package/@uairango/react-native-geocoder)
 
-v1.x [![Downloads](https://img.shields.io/npm/dw/@timwangdev/react-native-geocoder.svg)](https://www.npmjs.com/package/@timwangdev/react-native-geocoder) / 
+v1.x [![Downloads](https://img.shields.io/npm/dw/@uairango/react-native-geocoder.svg)](https://www.npmjs.com/package/@uairango/react-native-geocoder) /
 v0.x [![Downloads](https://img.shields.io/npm/dw/react-native-geocoder-reborn.svg)](https://www.npmjs.com/package/react-native-geocoder-reborn)
 
 
@@ -13,20 +13,20 @@ The project is originally forked from [devfd/react-native-geocoder](https://gith
 
 > Note: This is a pre-release version.
 
-> If you're looking for v0.x verison, please go to [v0.x branch](https://github.com/timwangdev/react-native-geocoder-reborn/tree/v0.x).
+> If you're looking for v0.x verison, please go to [v0.x branch](https://github.com/uairango/react-native-geocoder-reborn/tree/v0.x).
 
-> **Please check the [GitHub Release page](https://github.com/timwangdev/react-native-geocoder-reborn/releases/) for Version 1.0.0 Full Changelog and Migration Guide. [WORKING IN PROGRESS]**
+> **Please check the [GitHub Release page](https://github.com/uairango/react-native-geocoder-reborn/releases/) for Version 1.0.0 Full Changelog and Migration Guide. [WORKING IN PROGRESS]**
 
 ## Installation
 
 ```sh
-npm install @timwangdev/react-native-geocoder
+npm install @uairango/react-native-geocoder
 ```
 
 or
 
 ```sh
-yarn add @timwangdev/react-native-geocoder
+yarn add @uairango/react-native-geocoder
 ```
 
 ## Link
@@ -40,7 +40,7 @@ If "Autolinking" is not available for you, please try the following:
 <details><summary>Use `react-native link`</summary>
 
 ```
-react-native link @timwangdev/react-native-geocoder
+react-native link @uairango/react-native-geocoder
 ```
 </details>
 
@@ -49,13 +49,13 @@ If automatic linking fails you can follow the manual installation steps
 
 #### iOS (With CocoaPods)
 
-1. Add `pod 'react-native-geocoder', :path => '../node_modules/@timwangdev/react-native-geocoder/react-native-geocoder.podspec'` to your Podfile.
+1. Add `pod 'react-native-geocoder', :path => '../node_modules/@uairango/react-native-geocoder/react-native-geocoder.podspec'` to your Podfile.
 2. Run `pod install`.
 
 #### iOS (Without CocoaPods)
 
 1. In the XCode's "Project navigator", right click on Libraries folder under your project ➜ `Add Files to <...>`
-2. Go to `node_modules` ➜ `@timwangdev/react-native-geocoder` and add `ios/RNGeocoder.xcodeproj` file
+2. Go to `node_modules` ➜ `@uairango/react-native-geocoder` and add `ios/RNGeocoder.xcodeproj` file
 3. Add `libGeocoder.a` to "Build Phases" -> "Link Binary With Libraries"
 
 #### Android
@@ -65,7 +65,7 @@ If automatic linking fails you can follow the manual installation steps
 ```gradle
 ...
 include ':react-native-geocoder', ':app'
-project(':react-native-geocoder').projectDir = new File(rootProject.projectDir, '../node_modules/@timwangdev/react-native-geocoder/android')
+project(':react-native-geocoder').projectDir = new File(rootProject.projectDir, '../node_modules/@uairango/react-native-geocoder/android')
 ```
 
 2. In `android/app/build.gradle`
@@ -81,7 +81,7 @@ dependencies {
 3. Register module (in MainApplication.java)
 
 ```java
-import com.timwangdev.reactnativegeocoder.GeocoderPackage; // <--- Add this line
+import com.uairango.reactnativegeocoder.GeocoderPackage; // <--- Add this line
 
 public class MainActivity extends ReactActivity {
   ...
@@ -100,7 +100,7 @@ public class MainActivity extends ReactActivity {
 ## Usage
 
 ```js
-import Geocoder from '@timwangdev/react-native-geocoder';
+import Geocoder from '@uairango/react-native-geocoder';
 
 try {
   ...
@@ -181,7 +181,7 @@ try {
 
 3. Use `forceGoogleOnIos` if you want consistent result on both iOS and Android platform, due to the limitation of iOS native implantation.
 
-4. *REMOVED* <del>`requestHeaders` is useful together with Google API credentials restrictions by setting the `Referer` header. See [#20](https://github.com/timwangdev/react-native-geocoder-reborn/issues/20).</del>
+4. *REMOVED* <del>`requestHeaders` is useful together with Google API credentials restrictions by setting the `Referer` header. See [#20](https://github.com/uairango/react-native-geocoder-reborn/issues/20).</del>
 
 5. In order to avoid hitting rate limit or reducing API queries, you should cache the results in your program whenever possible.
 

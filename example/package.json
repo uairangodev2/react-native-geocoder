@@ -1,6 +1,6 @@
 {
-  "name": "@timwangdev/react-native-geocoder-example",
-  "description": "Example app for @timwangdev/react-native-geocoder-example.",
+  "name": "@uairango/react-native-geocoder-example",
+  "description": "Example app for @uairango/react-native-geocoder-example.",
   "version": "0.0.1",
   "private": true,
   "scripts": {

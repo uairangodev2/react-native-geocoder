@@ -1,6 +1,6 @@
 {
-  "name": "@timwangdev/react-native-geocoder",
-  "version": "1.0.0-alpha.7",
+  "name": "@uairango/react-native-geocoder",
+  "version": "1.0.0",
   "description": "Multi-platform geocoder library for React Native apps.",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
@@ -28,13 +28,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/timwangdev/react-native-geocoder-reborn",
-  "author": "Yao Wang <tim.wangyao@gmail.com> (https://github.com/timwangdev)",
+  "repository": "https://github.com/uairangodev2/react-native-geocoder",
+  "author": "UaiRango dev2 <uairangodev2@gmail.com> (https://github.com/uairangodev2)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/timwangdev/react-native-geocoder-reborn/issues"
+    "url": "https://github.com/uairangodev2/react-native-geocoder/issues"
   },
-  "homepage": "https://github.com/timwangdev/react-native-geocoder-reborn#readme",
+  "homepage": "https://github.com/uairangodev2/react-native-geocoder#readme",
   "dependencies": {},
   "devDependencies": {
     "@commitlint/config-conventional": "^8.3.4",

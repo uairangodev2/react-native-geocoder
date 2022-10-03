@@ -1,4 +1,4 @@
-package com.timwangdev.reactnativegeocoder
+package com.uairango.reactnativegeocoder
 
 import java.util.Arrays
 import java.util.Collections

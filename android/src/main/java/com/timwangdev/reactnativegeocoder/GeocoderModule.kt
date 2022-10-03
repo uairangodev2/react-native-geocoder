@@ -1,4 +1,4 @@
-package com.timwangdev.reactnativegeocoder
+package com.uairango.reactnativegeocoder
 
 import android.location.Address;
 import android.location.Geocoder;
