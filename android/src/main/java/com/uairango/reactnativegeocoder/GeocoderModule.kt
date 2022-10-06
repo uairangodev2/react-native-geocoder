@@ -45,34 +45,17 @@ class GeocoderModule(reactContext: ReactApplicationContext) :
     var maxResults = if (config.hasKey("maxResults")) config.getInt("maxResults") else -1
     if (maxResults <= 0) maxResults = 5
     try {
-      if (Build.VERSION.SDK_INT >= 33) {
-        val geocodeListener = object : Geocoder.GeocodeListener {
-          override fun onGeocode(addresses: MutableList<Address>) {
-            if (addresses != null && addresses.size > 0) {
-              promise.resolve(transform(addresses))
-            } else {
-              promise.reject("EMPTY_RESULT", "Geocoder returned an empty list.")
-            }
-          }
-
-          override fun onError(errorMessage: String?) {
-            promise.reject("ERROR_RESULT", errorMessage)
-          }
-        }
-        geocoder.getFromLocationName(addressName, maxResults, geocodeListener)
+      val addresses: MutableList<Address>
+      if (swLat != null && swLng != null && neLat != null && neLng != null) {
+        addresses =
+            geocoder.getFromLocationName(addressName, maxResults, swLat, swLng, neLat, neLng)!!.toMutableList()
       } else {
-        val addresses: MutableList<Address>
-        if (swLat != null && swLng != null && neLat != null && neLng != null) {
-          addresses =
-              geocoder.getFromLocationName(addressName, maxResults, swLat, swLng, neLat, neLng)!!.toMutableList()
-        } else {
-          addresses = geocoder.getFromLocationName(addressName, maxResults)!!.toMutableList()
-        }
-        if (addresses != null && addresses.size > 0) {
-          promise.resolve(transform(addresses))
-        } else {
-          promise.reject("EMPTY_RESULT", "Geocoder returned an empty list.")
-        }
+        addresses = geocoder.getFromLocationName(addressName, maxResults)!!.toMutableList()
+      }
+      if (addresses != null && addresses.size > 0) {
+        promise.resolve(transform(addresses))
+      } else {
+        promise.reject("EMPTY_RESULT", "Geocoder returned an empty list.")
       }
     } catch (e: Exception) {
       promise.reject("NATIVE_ERROR", e)
